@@ -16,7 +16,7 @@ data class Task(
     @ColumnInfo(name = "id")
     val id: Int = 0,
 
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "title")
     val title: String,
 
     @ColumnInfo(name = "description")

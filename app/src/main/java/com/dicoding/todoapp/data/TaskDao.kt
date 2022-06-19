@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 @Dao
 interface TaskDao {
 
+    @RawQuery(observedEntities = [Task::class])
     fun getTasks(query: SupportSQLiteQuery): DataSource.Factory<Int, Task>
 
     @Query("SELECT * FROM task WHERE id = :taskId")

@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.work.Worker
@@ -14,6 +15,7 @@ import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
 import com.dicoding.todoapp.data.TaskRepository
 import com.dicoding.todoapp.ui.detail.DetailTaskActivity
+import com.dicoding.todoapp.utils.DateConverter
 import com.dicoding.todoapp.utils.NOTIFICATION_CHANNEL_ID
 import com.dicoding.todoapp.utils.TASK_ID
 
@@ -41,9 +43,11 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_date)
             .setContentTitle(data.title)
-            .setContentText(data.description)
+            .setContentText(applicationContext.getString(R.string.notify_content, DateConverter.convertMillisToString(data.dueDateMillis)))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
+
+        Log.d("Notification Text", R.string.notify_content.toString())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH)
             notification.setChannelId(NOTIFICATION_CHANNEL_ID)

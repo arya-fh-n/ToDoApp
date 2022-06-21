@@ -39,6 +39,7 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
             .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.ic_date)
             .setContentTitle(data.title)
             .setContentText(data.description)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

@@ -1,5 +1,6 @@
 package com.dicoding.todoapp.ui.add
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
 import com.dicoding.todoapp.ui.ViewModelFactory
+import com.dicoding.todoapp.ui.list.TaskActivity
 import com.dicoding.todoapp.utils.DatePickerFragment
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
@@ -49,6 +51,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerFragment.DialogDateListen
                         isCompleted = false
                     )
                 )
+                startActivity(Intent(this@AddTaskActivity, TaskActivity::class.java))
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

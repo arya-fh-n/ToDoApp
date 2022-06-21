@@ -39,8 +39,8 @@ class TaskActivity : AppCompatActivity() {
         }
 
         //TODO 6 : Initiate RecyclerView with LayoutManager
-        val rvTasks = findViewById<RecyclerView>(R.id.rv_task)
-        rvTasks.layoutManager = LinearLayoutManager(this)
+        recycler = findViewById(R.id.rv_task)
+        recycler.layoutManager = LinearLayoutManager(this)
 
         initAction()
 
@@ -58,8 +58,7 @@ class TaskActivity : AppCompatActivity() {
             taskViewModel.completeTask(tasks, completed)
         }
 
-        val rvTasks = findViewById<RecyclerView>(R.id.rv_task)
-        rvTasks.adapter = adapter
+        recycler.adapter = adapter
         adapter.submitList(task)
     }
 

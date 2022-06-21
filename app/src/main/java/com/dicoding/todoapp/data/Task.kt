@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 //TODO 1 : Define a local database table using the schema in app/schema/tasks.json
-@Entity(tableName = "task")
+@Entity(tableName = "tasks")
 @Parcelize
 data class Task(
     @PrimaryKey(autoGenerate = true)

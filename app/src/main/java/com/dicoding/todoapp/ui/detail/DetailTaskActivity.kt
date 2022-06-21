@@ -26,11 +26,10 @@ class DetailTaskActivity : AppCompatActivity() {
         detailTaskViewModel.setTaskId(taskId)
 
         detailTaskViewModel.task.observe(this) { task ->
-            if (task != null) {
                 findViewById<TextView>(R.id.title).text = task.title
                 findViewById<TextView>(R.id.detail_ed_description).text = task.description
                 findViewById<TextView>(R.id.detail_ed_due_date).text = task.dueDateMillis.toString()
-            }
+
         }
 
         findViewById<Button>(R.id.btn_delete_task).setOnClickListener {

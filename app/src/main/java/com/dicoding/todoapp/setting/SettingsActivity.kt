@@ -1,17 +1,17 @@
 package com.dicoding.todoapp.setting
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.dicoding.todoapp.R
 import com.dicoding.todoapp.notification.NotificationWorker
 import com.dicoding.todoapp.utils.NOTIFICATION_CHANNEL_ID
+import java.util.concurrent.TimeUnit
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -34,21 +34,21 @@ class SettingsActivity : AppCompatActivity() {
             val prefNotification =
                 findPreference<SwitchPreference>(getString(R.string.pref_key_notify))
             prefNotification?.setOnPreferenceChangeListener { preference, newValue ->
-                if (newValue == true) {
-                    Log.d("Settings", preference.toString())
-                    Log.d("Settings", newValue.toString())
-                    val channelName = getString(R.string.notify_channel_name)
-                    //TODO 13 : Schedule and cancel daily reminder using WorkManager with data channelName
-                    val workManager = WorkManager.getInstance(preference.context)
-
-                    val channelData = Data.Builder()
-                        .putString(NOTIFICATION_CHANNEL_ID, channelName)
+                val workManager = WorkManager.getInstance(preference.context)
+                val channelName = getString(R.string.notify_channel_name)
+                //TODO 13 : Schedule and cancel daily reminder using WorkManager with data channelName
+                val channelData = Data.Builder()
+                    .putString(NOTIFICATION_CHANNEL_ID, channelName)
+                    .build()
+                val periodicWorkRequest =
+                    PeriodicWorkRequest.Builder(NotificationWorker::class.java, 24, TimeUnit.HOURS)
+                        .setInputData(channelData)
                         .build()
-                    val oneTimeWorkRequest =
-                        OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-                            .setInputData(channelData)
-                            .build()
-                    workManager.enqueue(oneTimeWorkRequest)
+
+                if (newValue == true) {
+                    workManager.enqueue(periodicWorkRequest)
+                } else if (newValue == false) {
+                    workManager.cancelWorkById(periodicWorkRequest.id)
                 }
                 true
             }

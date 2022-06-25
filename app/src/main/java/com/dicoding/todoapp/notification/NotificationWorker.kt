@@ -47,7 +47,6 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
 
-        Log.d("Notification Text", R.string.notify_content.toString())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH)
             notification.setChannelId(NOTIFICATION_CHANNEL_ID)

@@ -28,7 +28,6 @@ class DetailTaskActivity : AppCompatActivity() {
         detailTaskViewModel = ViewModelProvider(this, factory).get(DetailTaskViewModel::class.java)
         //TODO 11 : Show detail task and implement delete action
         val taskId = intent.getIntExtra(TASK_ID, 0)
-        Log.d("DetailTask", "Task ID : $taskId")
         detailTaskViewModel.setTaskId(taskId)
 
         edtTitle = findViewById(R.id.detail_ed_title)
@@ -36,7 +35,6 @@ class DetailTaskActivity : AppCompatActivity() {
         edtDueDate = findViewById(R.id.detail_ed_due_date)
 
         detailTaskViewModel.task.observe(this) { task ->
-            Log.d("DetailTaskDetails2", "Task : $task")
             task?.let {
                 edtTitle.setText(it.title)
                 edtDesc.setText(it.description)
